@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { api } from '@/utils/apiClient';
 import { toast } from 'sonner';
-import { Bell, BellOff, Plus, Trash2, Settings, Clock, RefreshCw, History, ChevronDown, ChevronUp } from 'lucide-react';
+import { Bell, BellOff, Plus, Trash2, Settings, RefreshCw, History, ChevronUp } from 'lucide-react';
 import { useAPI } from '@/context/APIContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -149,20 +149,6 @@ const MonitorPage = () => {
     }
   };
 
-  // 测试Telegram通知
-  const testNotification = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.post('/monitor/test-notification');
-      toast.success(response.data.message);
-    } catch (error: any) {
-      const errorMsg = error.response?.data?.message || '测试失败';
-      toast.error(errorMsg);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   // 获取订阅历史记录
   const loadHistory = async (planCode: string) => {
     try {
@@ -265,32 +251,6 @@ const MonitorPage = () => {
             <p className="text-lg sm:text-2xl font-bold text-cyber-accent">{monitorStatus.known_servers_count}</p>
           </div>
         </div>
-      </div>
-
-      {/* 提醒说明 */}
-      <div className="bg-cyber-accent/10 border border-cyber-accent/30 rounded p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h4 className="text-cyber-accent font-medium flex items-center gap-2">
-            <Clock size={18} />
-            监控说明
-          </h4>
-          <button
-            onClick={testNotification}
-            disabled={isLoading}
-            className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/40 hover:border-blue-500/60 rounded-md transition-all flex items-center gap-1.5 text-sm font-medium shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Bell size={14} />
-            测试通知
-          </button>
-        </div>
-        <ul className="text-sm text-cyber-muted space-y-1">
-          <li>• 监控器每 {monitorStatus.check_interval} 秒检查一次订阅的服务器可用性</li>
-          <li>• <span className="text-cyber-accent font-medium">配置级别监控</span>：自动监控所有配置组合（内存+存储），每个配置单独通知</li>
-          <li>• 当服务器从无货变有货时，会发送 Telegram 通知（包含配置详情）</li>
-          <li>• 确保已在设置页面配置 Telegram Token 和 Chat ID</li>
-          <li>• 可以指定监控特定数据中心，或留空监控所有数据中心</li>
-          <li>• 点击右上角"测试通知"按钮可以立即测试 Telegram 配置</li>
-        </ul>
       </div>
 
       {/* 订阅列表 */}

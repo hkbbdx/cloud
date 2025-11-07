@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { api } from '@/utils/apiClient';
 import { toast } from 'sonner';
-import { Bell, BellOff, Plus, Trash2, Settings, Clock, RefreshCw, History, ChevronDown, ChevronUp, Server } from 'lucide-react';
+import { Bell, BellOff, Plus, Trash2, Settings, RefreshCw, History, ChevronUp, Server } from 'lucide-react';
 import { useAPI } from '@/context/APIContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -294,21 +294,6 @@ const VPSMonitorPage = () => {
             <p className="text-2xl font-bold text-cyber-accent">{monitorStatus.check_interval}s</p>
           </div>
         </div>
-      </div>
-
-      {/* 提醒说明 */}
-      <div className="bg-cyber-accent/10 border border-cyber-accent/30 rounded p-4">
-        <h4 className="text-cyber-accent font-medium flex items-center gap-2 mb-2">
-          <Clock size={18} />
-          监控说明
-        </h4>
-        <ul className="text-sm text-cyber-muted space-y-1">
-          <li>• 监控器每 {monitorStatus.check_interval} 秒检查一次VPS套餐的库存状态</li>
-          <li>• 选择VPS型号（VPS-1 至 VPS-6），监控该型号在所有数据中心的库存</li>
-          <li>• 支持监控特定数据中心，或留空监控所有数据中心</li>
-          <li>• 当VPS从无货变有货时，会立即发送 Telegram 通知</li>
-          <li>• 确保已在设置页面配置 Telegram Token 和 Chat ID</li>
-        </ul>
       </div>
 
       {/* 订阅列表 */}
